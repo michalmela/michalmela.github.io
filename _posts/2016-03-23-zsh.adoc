@@ -1,0 +1,226 @@
+---
+layout: default
+title: Boost your productivity with zsh & oh-my-zsh
+shortTitle: zsh & oh-my-zsh
+root: ../../../
+---
+:imagesdir: /images/2016/03/23/
+
+== Introduction
+
+First of all, sorry for the name of this post. A serious blogger would've named it like:
+
+* Bash is dead, switch now or die with it!.footnote:[Serious blogger love bold statements and killing off various things...]
+* 10 reasons why you should switch to zsh NOW!footnote:[...but even more they do love writing things in ten points. No less, no more, ten is always the sweet spot.]
+
+Not that I wasn't even just a little bit tempted to use the first one... But I believe that to declare one tool (or framework, language etc.) _better_ than any other requires one to make some serious tests, which no one usually does. That, and I also believe that whoever reads it is an intelligent human being capable of assessing tools on his own and making conscious decisions about using them or not.
+
+My aim, instead, is to show you a tool, it's features and how to use it.
+
+Also, whenever people notice that there is something _wrong_ with my shell, they ask me what is it, and then I tell them it's _zsh_, they ask me what's so great about it that I decided to go through the trouble (in fact it's not any trouble at all) of switching to a non-standard shell. Things I can tell them from the top of my head (interactive autocomplete, `cd` without `cd`) don't usually cut it, so here we go.
+
+=== What is this I don't evenfootnote:[http://knowyourmeme.com/memes/what-is-this-i-dont-even]
+
+_zsh_ is a unix shell. To quote http://en.wikipedia.org/wiki/Z_shell[wikipedia], __Zsh can be thought of as an extended https://en.wikipedia.org/wiki/Bourne_shell[Bourne shell] with a large number of improvements, including some features of https://en.wikipedia.org/wiki/Bash_(Unix_shell)[bash], https://en.wikipedia.org/wiki/Korn_shell[ksh], and https://en.wikipedia.org/wiki/Tcsh[tcsh]__.
+
+The problem is, _zsh_ is so overwhelmingly configurable that it's not that easy to embrace the vastness of it's features and produce some sensible settings when first trying to use it.
+
+This is where _oh-my-zsh_ comes into play, which is a community project which brings these sensible defaults to _zsh_, along with *themes* (because _zsh_ will let you make your prompt look both sophisticated and informative) and *plugins* (which mostly bring outstanding integrations with popular _dev_ and _ops_ tools, like _maven_ or _docker_).
+
+== Get it
+
+=== For OS X and Linux
+
+1. First you install `zsh` -- the way to get it will vary from OS to OS:
+
+[source,sh]
+----
+# Ubuntu etc. with apt-get
+apt-get install zsh
+# Fedora etc. with yum
+yum install zsh
+
+# to switch the default shell to zsh:
+sudo chsh -s $(which zsh) `whoami`
+----
+
+2. Now installing _oh-my-zsh_ is as easy as it gets:
+
+[source,sh]
+----
+# with curl:
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# with wget:
+sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+----
+
+=== For Windows
+
+
+There is an awesome Cygwin distribution (you do use Cygwin on Windows, right?) called *babun*: http://babun.github.io/[babun.github.io]; it has all the cool stuff already bundled, and since zsh and oh-my-zsh are cool stuff, they are there too!
+
+Otherwise, zsh is available from Cygwin's installation manager like all the other packages. Then, to have zsh starting as default instead of bash you will usually just need to edit the `cygwin.bat` file in your Cygwin installation folder:
+
+[[app-listing]]
+[source,bat]
+.cygwin.bat
+----
+REM change this:
+bash --login -i
+REM to this:
+zsh -l -i
+----
+
+Then, provided you already have git, install oh-my-zsh just like Linux and OS X users.
+
+== Features
+
+Naturally, these are not all the features _zsh_ and _oh-my-zsh_ have to offer (notable absents include, for example, http://zsh.sourceforge.net/FAQ/zshfaq03.html#31(scripting improvements)). Just the ones I find particularly awesome.
+
+
+
+==== Interactive and smart autocomplete
+
+You thought _bash_'s autocomplete is great because you compared it to Windows' _cmd_? Wait till you see _zsh_'s in action.
+
+It's _interactive_. Means you can _interact_ with it. Once it shows you suggestions you can use your arrow keys to navigate and select the one you like. It's great when:
+
+* you are too lazy to type
+* you don't really know what to start with to get the autocomplete going
+* more than one suggestion with the same beginning are only discernible by a character that is hard to type or escape manually -- it's a corner-case indeed, but an immeasurably annoying one when it happens in _bash_
+
+It's also _smart_. For example, say you have two files named, respectively:
+
+  foo-barbarbarbarbarbar-baz1
+  foo-barbarbarbarbarbar-baz2
+  
+Now if you write only _baz1_ and hit Tab:
+
+* in _bash_: you get nothing
+* in _zsh_: you win
+
+There are more of these little improvements, like optional expanding of files matched by an `*` in the command.
+
+==== Variables for paths
+
+For example, in your `.*rc` file write something like this:
+
+ export XY_TOMCAT=/home/jmelon/projects/super-secret-military-projects/project-xy/tomcat-7.0.51/  
+ 
+Now you can not only do this:  
+
+----
+ ~ ➜ cd XY_TOMCAT
+----
+(you may need to add a `~` before the variable name if you need to avoid ambiguity between it and some actual directory)
+
+but then you get a nice prompt like this:
+
+----
+ ~XY_TOMCAT ➜
+----
+
+which is great for working with nested paths you work with frequently. By exporting their paths as variables you effectively get aliases for directories as an alternative for creating symbolic links.
+
+
+
+==== scm branch information in prompt
+In default oh-my-zsh configuration (i.e. default theme) you get information on the actual branch of git repository and also if there are uncommitted changes:
+
+----
+directory-name git:(master) ✗ 
+----
+(The `✗` meaning there are some uncommitted changes, which would otherwise be a `✔`)
+
+Having the branch name always there and visible makes it so much easier to work with _git_ and heals you of compulsively writing `git status` (which, by the way, _oh-my-zsh_ aliases to `gst`, along with lots and lots and *lots* of other useful aliases for each plugin you include in your configuration) to ensure what branch you are currently on.
+
+With a bit more configuration (adding a plugin and using a theme that supports it) you can get roughtly the same for SVN, giving you the information on uncommitted changes and current revision.
+
+==== One `extract` to extract them all
+
+Extract is my very favourite and an extremely simple _oh-my-zsh_ plugin. To enable it, in your .zshrc replace this (default) line:
+
+----
+plugins=(git)
+----
+with this:
+
+----
+plugins=(git extract)
+----
+
+Now instead of `unzip`, `tar -xzvf` (whose exact arguments I couldn't memorize for the better part of my programmer life) or something even more gruesome you get one simple command, `extract`, which extracts the archive given as the first argument to the current directory.
+
+It optionally creates a subdirectory to contain the extracted files if a single directory was not already at the top of archive tree, as to not mess up your current work directory.
+
+I love it, and this is just one many awesome features you can get with _oh-my-zsh_ plugins.
+
+==== Changing directories without cd and other cd enhancements
+
+If you type directory name in bash without a command in front of it, you get (Ubuntu example):
+
+ :directory-name: command not found
+
+In zsh you will simply `cd` to that directory.
+
+Also, in zsh there are aliases like `cd..` for `cd ..` or `cd ...` for `cd ../..`.
+
+_Ha, aliases!_, you might say, _I can just do them myself and put them in the rc file! Why would I need some hipster, good-for-nothing shell for that?!_. Well, no, _bash_ won't let you alias a command with dots. Period.
+
+I (subjectively) find it great, because:.
+
+1.  I `cd` to things at least 9000 times a day. Not writing three additional characters gives me at least one more coffee break while staying as productive as in `bash`
+2.  I did write `cd..` by mistake one out of three times; I really don't know why  the space just got out of my thumb's way or something, but it did (now I only ever write the `cd` at the beginning while still switching my mindset from a remote _bash_ to my local _zsh_)
+3.  Sometimes I begin to write the name of some executable which I though was in current directory while it's not, then I change my mind to first cd to the directory where the executable is located before executing it; I never remembered to put the cd in the front first  
+
+Once again: it's so simple, yet I love it.
+
+==== Demo
+
+Here is a demo of _zsh_'s autocompletion and _oh-my-zsh_'s _docker_, _highlighting_ and _autosuggestions_ plugins:
+
+image::docker-machine.gif[]
+
+==== Bonus: _z_
+
+Although _z_ is not really related to _zsh_ and you can well use it in any shell, for me it's the final piece of the puzzle to:
+ 
+* take your shell game to a new level
+* make you forget about _midnight commander_ at all because, well, shell will be enough
+* make your work look to a bystander as if you implanted your brain with an alien chip from future that makes the shell obey your will and fulfill your commands while you have completely forsaken the ancient IO devices (like keyboard)
+
+_z_'s github repo says that _z is the new j, yo_. I have no idea what that means (probably some references to the alien technology from the future), but I'd say that _z is the new cd_. It's a tool that records the directories you go to when working in shell to see how often you go to particular directories.
+
+As soon as it gets to know your habits a bit, you can use it to instantly `cd` into a directory with a long, nested path just by typing a small part of it. If it's unique then no problem. If not, it selects the most frequently used directory that matches the part.
+
+In the example below, I used _z_ to go instantly from my home directory to the _asciidoctor-maven-examples_ by just typing _exam_ as the argument. I do have many other directories containing _examples_ part, but that was the one I used most frequently recently.
+
+[source,sh]
+----
+~ $ pwd
+/Users/melon
+
+~ $ z exam
+
+asciidoctor-maven-examples $ pwd
+/Users/melon/p/asciidoctor-maven-examples
+----
+
+_z_ is really just a script contained in a single file. To install it, clone the file from https://github.com/rupa/z[_z_'s repo] and put it in your `.zshrc` file (or whatever *rc file you may be using).
+
+== Alternatives
+
+You can, of course, continue using _bash_. It's usually difficult to push for having _zsh_ installed on remote environments, so having the same shell locally and remotely may *theoratically* be a good thing. *Practically*, I have never suffered because of it for the last, give-or-take, three years of using _zsh_ + _oh-my-zsh_ combo (i.e. besides the suffering I felt when I wished I had all these cool features when ssh-ing to a remote environment).
+
+One interesting alternative to _zsh_ is https://github.com/fish-shell/fish-shell[_fish_]. It's easier to configure out-of-the-box than _zsh_ is without _oh-my-zsh_ and also has, e.g., syntax highlighting without any additional plugins. It is not, however, POSIX compliant which may be a (minor, I suppose, as you can always fall back to another shell) problem when running scripts prepared for other shells.
+
+There are also some alternatives to _oh-my-zsh_. https://github.com/zsh-users/antigen[_antigen_], for example, is similar in it's concept, more sophisticated in implementation and claims compatbility with _oh-my-zsh_'s plugins. Right now, however, it seems to be far less popular and also not as mature, already having two self-proclaimed _replacements_ to it (https://github.com/Tarrasch/antigen-hs[antigen-hs] and https://github.com/getantibody/antibody[antibody]). My opinionated advice is to stick to _oh-my-zsh_ if it works and is fast enough for you and only otherwise research alternatives.
+
+== Links
+
+* http://ohmyz.sh/  -- _oh-my-zsh_'s homepage
+* https://github.com/robbyrussell/oh-my-zsh  -- _oh-my-zsh_'s github home -- contains some additional useful information
+* https://github.com/zsh-users/zsh-completions  -- some additional _zsh_ completions you may find useful, although most of them are already part of _oh-my-zsh_
+* https://github.com/unixorn/awesome-zsh-plugins  -- __A collection of ZSH frameworks, plugins, tutorials & themes inspired by the various awesome list collections out there.__
+* https://github.com/rupa/z  -- _z_'s github home
+  
