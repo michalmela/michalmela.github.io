@@ -1,0 +1,379 @@
+<div class="sect1">
+<h2 id="introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First of all, sorry for the name of this post. A serious blogger would&#8217;ve named it like:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Bash is dead, switch now or die with it!.<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p>
+</li>
+<li>
+<p>10 reasons why you should switch to zsh NOW!<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Not that I wasn&#8217;t even just a little bit tempted to use the first one&#8230;&#8203; But I believe that to declare one tool (or framework, language etc.) <em>better</em> than any other requires one to make some serious tests, which no one usually does. That, and I also believe that whoever reads it is an intelligent human being capable of assessing tools on his own and making conscious decisions about using them or not.</p>
+</div>
+<div class="paragraph">
+<p>My aim, instead, is to show you a tool, it&#8217;s features and how to use it.</p>
+</div>
+<div class="paragraph">
+<p>Also, whenever people notice that there is something <em>wrong</em> with my shell, they ask me what is it, and then I tell them it&#8217;s <em>zsh</em>, they ask me what&#8217;s so great about it that I decided to go through the trouble (in fact it&#8217;s not any trouble at all) of switching to a non-standard shell. Things I can tell them from the top of my head (interactive autocomplete, <code>cd</code> without <code>cd</code>) don&#8217;t usually cut it, so here we go.</p>
+</div>
+<div class="sect2">
+<h3 id="what_is_this_i_don_t_even_sup_class_footnote_a_id_footnoteref_1_class_footnote_href_footnote_1_title_view_footnote_1_a_sup">What is this I don&#8217;t even<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></h3>
+<div class="paragraph">
+<p><em>zsh</em> is a unix shell. To quote <a href="http://en.wikipedia.org/wiki/Z_shell">wikipedia</a>, <em>Zsh can be thought of as an extended <a href="https://en.wikipedia.org/wiki/Bourne_shell">Bourne shell</a> with a large number of improvements, including some features of <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">bash</a>, <a href="https://en.wikipedia.org/wiki/Korn_shell">ksh</a>, and <a href="https://en.wikipedia.org/wiki/Tcsh">tcsh</a></em>.</p>
+</div>
+<div class="paragraph">
+<p>The problem is, <em>zsh</em> is so overwhelmingly configurable that it&#8217;s not that easy to embrace the vastness of it&#8217;s features and produce some sensible settings when first trying to use it.</p>
+</div>
+<div class="paragraph">
+<p>This is where <em>oh-my-zsh</em> comes into play, which is a community project which brings these sensible defaults to <em>zsh</em>, along with <strong>themes</strong> (because <em>zsh</em> will let you make your prompt look both sophisticated and informative) and <strong>plugins</strong> (which mostly bring outstanding integrations with popular <em>dev</em> and <em>ops</em> tools, like <em>maven</em> or <em>docker</em>).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="get_it">Get it</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="for_os_x_and_linux">For OS X and Linux</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First you install <code>zsh</code>&#8201;&#8212;&#8201;the way to get it will vary from OS to OS:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh"># Ubuntu etc. with apt-get
+apt-get install zsh
+# Fedora etc. with yum
+yum install zsh
+
+# to switch the default shell to zsh:
+sudo chsh -s $(which zsh) `whoami`</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Now installing <em>oh-my-zsh</em> is as easy as it gets:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh"># with curl:
+sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
+# with wget:
+sh -c &quot;$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="for_windows">For Windows</h3>
+<div class="paragraph">
+<p>There is an awesome Cygwin distribution (you do use Cygwin on Windows, right?) called <strong>babun</strong>: <a href="http://babun.github.io/">babun.github.io</a>; it has all the cool stuff already bundled, and since zsh and oh-my-zsh are cool stuff, they are there too!</p>
+</div>
+<div class="paragraph">
+<p>Otherwise, zsh is available from Cygwin&#8217;s installation manager like all the other packages. Then, to have zsh starting as default instead of bash you will usually just need to edit the <code>cygwin.bat</code> file in your Cygwin installation folder:</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="title">cygwin.bat</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bat">REM change this:
+bash --login -i
+REM to this:
+zsh -l -i</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, provided you already have git, install oh-my-zsh just like Linux and OS X users.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features">Features</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Naturally, these are not all the features <em>zsh</em> and <em>oh-my-zsh</em> have to offer (notable absents include, for example, <a href="http://zsh.sourceforge.net/FAQ/zshfaq03.html#31(scripting" class="bare">http://zsh.sourceforge.net/FAQ/zshfaq03.html#31(scripting</a> improvements)). Just the ones I find particularly awesome.</p>
+</div>
+<div class="sect3">
+<h4 id="interactive_and_smart_autocomplete">Interactive and smart autocomplete</h4>
+<div class="paragraph">
+<p>You thought <em>bash</em>'s autocomplete is great because you compared it to Windows' <em>cmd</em>? Wait till you see <em>zsh</em>'s in action.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s <em>interactive</em>. Means you can <em>interact</em> with it. Once it shows you suggestions you can use your arrow keys to navigate and select the one you like. It&#8217;s great when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>you are too lazy to type</p>
+</li>
+<li>
+<p>you don&#8217;t really know what to start with to get the autocomplete going</p>
+</li>
+<li>
+<p>more than one suggestion with the same beginning are only discernible by a character that is hard to type or escape manually&#8201;&#8212;&#8201;it&#8217;s a corner-case indeed, but an immeasurably annoying one when it happens in <em>bash</em></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also <em>smart</em>. For example, say you have two files named, respectively:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>foo-barbarbarbarbarbar-baz1
+foo-barbarbarbarbarbar-baz2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now if you write only <em>baz1</em> and hit Tab:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>in <em>bash</em>: you get nothing</p>
+</li>
+<li>
+<p>in <em>zsh</em>: you win</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are more of these little improvements, like optional expanding of files matched by an <code>*</code> in the command.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="variables_for_paths">Variables for paths</h4>
+<div class="paragraph">
+<p>For example, in your <code>.*rc</code> file write something like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>export XY_TOMCAT=/home/jmelon/projects/super-secret-military-projects/project-xy/tomcat-7.0.51/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can not only do this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> ~ ➜ cd XY_TOMCAT</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(you may need to add a <code>~</code> before the variable name if you need to avoid ambiguity between it and some actual directory)</p>
+</div>
+<div class="paragraph">
+<p>but then you get a nice prompt like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> ~XY_TOMCAT ➜</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which is great for working with nested paths you work with frequently. By exporting their paths as variables you effectively get aliases for directories as an alternative for creating symbolic links.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="scm_branch_information_in_prompt">scm branch information in prompt</h4>
+<div class="paragraph">
+<p>In default oh-my-zsh configuration (i.e. default theme) you get information on the actual branch of git repository and also if there are uncommitted changes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>directory-name git:(master) ✗</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(The <code>✗</code> meaning there are some uncommitted changes, which would otherwise be a <code>✔</code>)</p>
+</div>
+<div class="paragraph">
+<p>Having the branch name always there and visible makes it so much easier to work with <em>git</em> and heals you of compulsively writing <code>git status</code> (which, by the way, <em>oh-my-zsh</em> aliases to <code>gst</code>, along with lots and lots and <strong>lots</strong> of other useful aliases for each plugin you include in your configuration) to ensure what branch you are currently on.</p>
+</div>
+<div class="paragraph">
+<p>With a bit more configuration (adding a plugin and using a theme that supports it) you can get roughtly the same for SVN, giving you the information on uncommitted changes and current revision.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="one_code_extract_code_to_extract_them_all">One <code>extract</code> to extract them all</h4>
+<div class="paragraph">
+<p>Extract is my very favourite and an extremely simple <em>oh-my-zsh</em> plugin. To enable it, in your .zshrc replace this (default) line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>plugins=(git)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>plugins=(git extract)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now instead of <code>unzip</code>, <code>tar -xzvf</code> (whose exact arguments I couldn&#8217;t memorize for the better part of my programmer life) or something even more gruesome you get one simple command, <code>extract</code>, which extracts the archive given as the first argument to the current directory.</p>
+</div>
+<div class="paragraph">
+<p>It optionally creates a subdirectory to contain the extracted files if a single directory was not already at the top of archive tree, as to not mess up your current work directory.</p>
+</div>
+<div class="paragraph">
+<p>I love it, and this is just one many awesome features you can get with <em>oh-my-zsh</em> plugins.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="changing_directories_without_cd_and_other_cd_enhancements">Changing directories without cd and other cd enhancements</h4>
+<div class="paragraph">
+<p>If you type directory name in bash without a command in front of it, you get (Ubuntu example):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:directory-name: command not found</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In zsh you will simply <code>cd</code> to that directory.</p>
+</div>
+<div class="paragraph">
+<p>Also, in zsh there are aliases like <code>cd..</code> for <code>cd ..</code> or <code>cd &#8230;&#8203;</code> for <code>cd ../..</code>.</p>
+</div>
+<div class="paragraph">
+<p><em>Ha, aliases!</em>, you might say, <em>I can just do them myself and put them in the rc file! Why would I need some hipster, good-for-nothing shell for that?!</em>. Well, no, <em>bash</em> won&#8217;t let you alias a command with dots. Period.</p>
+</div>
+<div class="paragraph">
+<p>I (subjectively) find it great, because:.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>I <code>cd</code> to things at least 9000 times a day. Not writing three additional characters gives me at least one more coffee break while staying as productive as in <code>bash</code></p>
+</li>
+<li>
+<p>I did write <code>cd..</code> by mistake one out of three times; I really don&#8217;t know why  the space just got out of my thumb&#8217;s way or something, but it did (now I only ever write the <code>cd</code> at the beginning while still switching my mindset from a remote <em>bash</em> to my local <em>zsh</em>)</p>
+</li>
+<li>
+<p>Sometimes I begin to write the name of some executable which I though was in current directory while it&#8217;s not, then I change my mind to first cd to the directory where the executable is located before executing it; I never remembered to put the cd in the front first</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once again: it&#8217;s so simple, yet I love it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo">Demo</h4>
+<div class="paragraph">
+<p>Here is a demo of <em>zsh</em>'s autocompletion and <em>oh-my-zsh</em>'s <em>docker</em>, <em>highlighting</em> and <em>autosuggestions</em> plugins:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/2016-03-22/docker-machine.gif" alt="docker machine">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="bonus_em_z_em">Bonus: <em>z</em></h4>
+<div class="paragraph">
+<p>Although <em>z</em> is not really related to <em>zsh</em> and you can well use it in any shell, for me it&#8217;s the final piece of the puzzle to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>take your shell game to a new level</p>
+</li>
+<li>
+<p>make you forget about <em>midnight commander</em> at all because, well, shell will be enough</p>
+</li>
+<li>
+<p>make your work look to a bystander as if you implanted your brain with an alien chip from future that makes the shell obey your will and fulfill your commands while you have completely forsaken the ancient IO devices (like keyboard)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>z</em>'s github repo says that <em>z is the new j, yo</em>. I have no idea what that means (probably some references to the alien technology from the future), but I&#8217;d say that <em>z is the new cd</em>. It&#8217;s a tool that records the directories you go to when working in shell to see how often you go to particular directories.</p>
+</div>
+<div class="paragraph">
+<p>As soon as it gets to know your habits a bit, you can use it to instantly <code>cd</code> into a directory with a long, nested path just by typing a small part of it. If it&#8217;s unique then no problem. If not, it selects the most frequently used directory that matches the part.</p>
+</div>
+<div class="paragraph">
+<p>In the example below, I used <em>z</em> to go instantly from my home directory to the <em>asciidoctor-maven-examples</em> by just typing <em>exam</em> as the argument. I do have many other directories containing <em>examples</em> part, but that was the one I used most frequently recently.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">~ $ pwd
+/Users/melon
+
+~ $ z exam
+
+asciidoctor-maven-examples $ pwd
+/Users/melon/p/asciidoctor-maven-examples</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>z</em> is really just a script contained in a single file. To install it, clone the file from <a href="https://github.com/rupa/z"><em>z</em>'s repo</a> and put it in your <code>.zshrc</code> file (or whatever *rc file you may be using).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="alternatives">Alternatives</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can, of course, continue using <em>bash</em>. It&#8217;s usually difficult to push for having <em>zsh</em> installed on remote environments, so having the same shell locally and remotely may <strong>theoratically</strong> be a good thing. <strong>Practically</strong>, I have never suffered because of it for the last, give-or-take, three years of using <em>zsh</em> + <em>oh-my-zsh</em> combo (i.e. besides the suffering I felt when I wished I had all these cool features when ssh-ing to a remote environment).</p>
+</div>
+<div class="paragraph">
+<p>One interesting alternative to <em>zsh</em> is <a href="https://github.com/fish-shell/fish-shell"><em>fish</em></a>. It&#8217;s easier to configure out-of-the-box than <em>zsh</em> is without <em>oh-my-zsh</em> and also has, e.g., syntax highlighting without any additional plugins. It is not, however, POSIX compliant which may be a (minor, I suppose, as you can always fall back to another shell) problem when running scripts prepared for other shells.</p>
+</div>
+<div class="paragraph">
+<p>There are also some alternatives to <em>oh-my-zsh</em>. <a href="https://github.com/zsh-users/antigen"><em>antigen</em></a>, for example, is similar in it&#8217;s concept, more sophisticated in implementation and claims compatbility with <em>oh-my-zsh</em>'s plugins. Right now, however, it seems to be far less popular and also not as mature, already having two self-proclaimed <em>replacements</em> to it (<a href="https://github.com/Tarrasch/antigen-hs">antigen-hs</a> and <a href="https://github.com/getantibody/antibody">antibody</a>). My opinionated advice is to stick to <em>oh-my-zsh</em> if it works and is fast enough for you and only otherwise research alternatives.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="links">Links</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://ohmyz.sh/" class="bare">http://ohmyz.sh/</a> &#8201;&#8212;&#8201;<em>oh-my-zsh</em>'s homepage</p>
+</li>
+<li>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh" class="bare">https://github.com/robbyrussell/oh-my-zsh</a> &#8201;&#8212;&#8201;<em>oh-my-zsh</em>'s github home&#8201;&#8212;&#8201;contains some additional useful information</p>
+</li>
+<li>
+<p><a href="https://github.com/zsh-users/zsh-completions" class="bare">https://github.com/zsh-users/zsh-completions</a> &#8201;&#8212;&#8201;some additional <em>zsh</em> completions you may find useful, although most of them are already part of <em>oh-my-zsh</em></p>
+</li>
+<li>
+<p><a href="https://github.com/unixorn/awesome-zsh-plugins" class="bare">https://github.com/unixorn/awesome-zsh-plugins</a> &#8201;&#8212;&#8201;<em>A collection of ZSH frameworks, plugins, tutorials &amp; themes inspired by the various awesome list collections out there.</em></p>
+</li>
+<li>
+<p><a href="https://github.com/rupa/z" class="bare">https://github.com/rupa/z</a> &#8201;&#8212;&#8201;<em>z</em>'s github home</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. <a href="http://knowyourmeme.com/memes/what-is-this-i-dont-even" class="bare">http://knowyourmeme.com/memes/what-is-this-i-dont-even</a>
+</div>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. Serious blogger love bold statements and killing off various things&#8230;&#8203;
+</div>
+<div class="footnote" id="_footnote_2">
+<a href="#_footnoteref_2">2</a>. &#8230;&#8203;but even more they do love writing things in ten points. No less, no more, ten is always the sweet spot.
+</div>
+</div>
