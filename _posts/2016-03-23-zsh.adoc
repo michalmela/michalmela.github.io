@@ -15,11 +15,12 @@ First of all, sorry for the name of this post. A serious blogger would've named 
 
 Not that I wasn't even just a little bit tempted to use the first one... But I believe that to declare one tool (or framework, language etc.) _better_ than any other requires one to make some serious tests, which no one usually does. That, and I also believe that whoever reads it is an intelligent human being capable of assessing tools on his own and making conscious decisions about using them or not.
 
-My aim, instead, is to show you a tool, it's features and how to use it.
+My aim, instead, is to show you a tool, its features and how to use it.
 
 Also, whenever people notice that there is something _wrong_ with my shell, they ask me what is it, and then I tell them it's _zsh_, they ask me what's so great about it that I decided to go through the trouble (in fact it's not any trouble at all) of switching to a non-standard shell. Things I can tell them from the top of my head (interactive autocomplete, `cd` without `cd`) don't usually cut it, so here we go.
 
-=== What is this I don't evenfootnote:[http://knowyourmeme.com/memes/what-is-this-i-dont-even]
+==== What is this I don't even
+footnote:[http://knowyourmeme.com/memes/what-is-this-i-dont-even]
 
 _zsh_ is a unix shell. To quote http://en.wikipedia.org/wiki/Z_shell[wikipedia], __Zsh can be thought of as an extended https://en.wikipedia.org/wiki/Bourne_shell[Bourne shell] with a large number of improvements, including some features of https://en.wikipedia.org/wiki/Bash_(Unix_shell)[bash], https://en.wikipedia.org/wiki/Korn_shell[ksh], and https://en.wikipedia.org/wiki/Tcsh[tcsh]__.
 
@@ -163,9 +164,13 @@ If you type directory name in bash without a command in front of it, you get (Ub
 
 In zsh you will simply `cd` to that directory.
 
-Also, in zsh there are aliases like `cd..` for `cd ..` or `cd ...` for `cd ../..`.
+Also, in zsh there are aliases like:
 
-_Ha, aliases!_, you might say, _I can just do them myself and put them in the rc file! Why would I need some hipster, good-for-nothing shell for that?!_. Well, no, _bash_ won't let you alias a command with dots. Period.
+* `cd..` and simply `..` for `cd ..`
+* `cd \...` and `\...` for `cd ../..`.
+* `cd` for `cd ~`
+
+NOTE: _Ha, aliases!_, you might say, _I can just do them myself and put them in the rc file! Why would I need some hipster, good-for-nothing shell for that?!_. Well, no, _bash_ won't let you alias a command with dots. Period.
 
 I (subjectively) find it great, because:.
 
@@ -175,9 +180,15 @@ I (subjectively) find it great, because:.
 
 Once again: it's so simple, yet I love it.
 
-==== Demo
+==== All the plugins
 
-Here is a demo of _zsh_'s autocompletion and _oh-my-zsh_'s _docker_, _highlighting_ and _autosuggestions_ plugins:
+Besides _extract_, there are numerous other _oh-my-zsh_ plugins adding support for most of the development and operations tools out there. It's best to take some time and review https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins[the list] yourself to select the plugins that suit you the most.
+
+Here is my demo of _zsh_'s autocompletion and _oh-my-zsh_'s plugins:
+
+* _docker_ (built-in, needs to be enabled)
+* https://github.com/zsh-users/zsh-autosuggestions[_highlighting_]
+* https://github.com/zsh-users/zsh-syntax-highlighting[_autosuggestions_]
 
 image::docker-machine.gif[]
 
